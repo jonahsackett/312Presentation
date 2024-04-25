@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <title>Clueless Chatroom</title>
+    <meta http-equiv="refresh" content="15" />
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='chatstyle.css')}}"/>
     <script src="{{ url_for('static', filename='functions.js') }}"></script>
     <style>
@@ -16,11 +17,11 @@
                 <p>{{ message.username | safe }}: {{ message.message | safe }}</p>
                 {% if authenticated %}
                     {% if username in message.likers %}
-                        <a href="/unlike/{{ message.id }}">Unlike</a>
+                        <a href="/unlike/{{ message.id }}">Not Valid</a>
                     {% else %}
-                        <a href="/like/{{ message.id }}">Like</a>
+                        <a href="/like/{{ message.id }}">Valid</a>
                     {% endif %}
-                    -Likes: {{ message.likes }}
+                    -Validity: {{ message.likes }}
                 {% endif %}
             </div>
             {% endfor %}
@@ -44,15 +45,13 @@
     <div class="image-uploads">
         {% if authenticated %}
         <img src="{{ file_name }}" alt="picture machine broke :(" class="pfp-image">
-        {% else %}
-        <img src="{{ url_for('static', filename= 'default.jpg') }}" alt="picture machine broke :(" class="pfp-image">
-        {% endif %}
         <form action="/image-upload" id="profile-pic" method="post" enctype="multipart/form-data">
             <label for="form-file">Upload a Profile Picture: </label>
-            <input id="file-upload" type="file" name="upload">
+            <input id="file-upload" type="file" name="upload" accept="image/*"/>
             <br/>
             <input type="submit" value="Change my profile picture!">
         </form>
+        {% endif %}
     </div>
 
     <script>

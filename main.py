@@ -245,8 +245,13 @@ def imageUpload():
                         new_name = "./static/" + user_name_here + ".png"
                     upload.save(new_name)
                     PfpCol = db["pfp"]
-                    PfpCol.insert_one({"username": user_name_here, "path": new_name})
+                    if PfpCol.find_one({"username": user_name_here}):
+                        PfpCol.update_one({"username": user_name_here}, {"$set": {"path": new_name}})
+                    else:
+                        PfpCol.insert_one({"username": user_name_here, "path": new_name})
                     # print(upload.name.replace("/",""))
+                else:
+                    return "unsupported file type", 404
     return redirect(url_for("chatroom"))
 
 
