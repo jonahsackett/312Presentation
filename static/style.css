@@ -2,6 +2,7 @@ body {
     background-color: #87d6d4;
     /*background-image: url("noir.jpg");*/
     /*background-size: cover;*/
+    font-family: "Roboto Light", serif;
 }
 
 .header {
@@ -17,6 +18,8 @@ body {
 }
 
 .image_div {
+    position: fixed;
+    top:45%;
     height: 80%;
     width: 50%;
     flex-direction: row;
@@ -54,6 +57,12 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+.register_form form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
     
 .register_form form div {
     margin-bottom: 2px;
@@ -61,11 +70,17 @@ body {
 
 .register_form form label {
     display: inline-block;
-    text-align: center;
+    text-align: right;
 }
 
 .register_form form input[name="password"] {
     margin-left: 3px;
+}
+
+.login_form form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
 
 .login_form form div {
@@ -84,13 +99,22 @@ body {
 }
 
 .logged_in_stuff {
-    /*position: fixed;*/
-    /*top: 10px;*/
-    /*right: 10px;*/
+    position: fixed;
+    /*top: calc(50% + 20px);*/
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #chatroom-enter {
-    margin-top: 30px;
+    position: fixed;
+    /*top: calc(50% + 20px);*/
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 /*#chatroom-enter {*/

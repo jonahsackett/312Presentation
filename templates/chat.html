@@ -12,9 +12,9 @@
 <body>
     <div class="chat">
         <div id="chat-messages">
-            {% for message in messages %}
+            {% for message in messages|sort(attribute='likes', reverse=True) %}
             <div class="chat-message">
-                <p>{{ message.username | safe }}: {{ message.message | safe }}</p>
+                {{ message.username | safe }}:&nbsp;<p>{{ message.message | safe }}</p>
                 {% if authenticated %}
                     {% if username in message.likers %}
                         <a href="/unlike/{{ message.id }}">Not Valid</a>
@@ -51,6 +51,9 @@
             <br/>
             <input type="submit" value="Change my profile picture!">
         </form>
+        {% else %}
+             <img src="{{url_for('static', filename='default.jpg')}}" alt="picture machine broke :(" class="pfp-image">
+            <p>Log in to change your profile picture!</p>
         {% endif %}
     </div>
 
