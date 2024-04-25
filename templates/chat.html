@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Clueless Chatroom</title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='chatstyle.css')}}"/>
+    <script src="{{ url_for('static', filename='functions.js') }}"></script>
+    <style>
+    </style>
+</head>
+<body>
+    <div class="chat">
+        <div id="chat-messages">
+            {% for message in messages %}
+            <div class="chat-message">
+                <p>{{ message.username | safe }}: {{ message.message | safe }}</p>
+                {% if authenticated %}
+                    {% if username in message.likers %}
+                        <a href="/unlike/{{ message.id }}">Unlike</a>
+                    {% else %}
+                        <a href="/like/{{ message.id }}">Like</a>
+                    {% endif %}
+                    -Likes: {{ message.likes }}
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <form action="/chatroom-message" method="post">
+            <div class="chat-form">
+                <div class="input">
+                    <label>
+                        <input name = "chat" id="textbox" type="text" placeholder="Type here!">
+                    </label>
+                    <button id="chat-button" type="submit">Send</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="movethisbutton">
+        <button id="leave" onclick="chatRoomLeave()">Go Back</button>
+    </div>
+
+    <div class="image-uploads">
+        {% if authenticated %}
+        <img src="{{ file_name }}" alt="picture machine broke :(" class="pfp-image">
+        {% else %}
+        <img src="{{ url_for('static', filename= 'default.jpg') }}" alt="picture machine broke :(" class="pfp-image">
+        {% endif %}
+        <form action="/image-upload" id="profile-pic" method="post" enctype="multipart/form-data">
+            <label for="form-file">Upload a Profile Picture: </label>
+            <input id="file-upload" type="file" name="upload">
+            <br/>
+            <input type="submit" value="Change my profile picture!">
+        </form>
+    </div>
+
+    <script>
+    </script>
+</body>
+</html>

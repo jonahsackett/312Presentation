@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Clueless Website</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='functions.js') }}"></script>
+    <style>
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Welcome to the CLUELESS 312 website!</h1>
+</div>
+
+<div class="image_div">
+    <img src="{{ url_for('static', filename='clue.JPG') }}" alt="picture machine broke :(" class="clue_image">
+</div>
+
+<button type="button" id="background_buttonred">Change background to red</button>
+<button type="button" id="background_buttonblue">Change background to blue</button>
+<button type="button" id="chatroom-enter" onclick="chatRoomDirect()">Go to chatroom!</button>
+
+
+{% if loggedin %}
+<div id="logged-in" class="logged_in_stuff">
+    <div class="show_name">
+        <p id="paragraph">
+            Welcome, {{ user_name_here | safe }}
+        </p>
+    </div>
+
+    <div class="logout-btn">
+        <br>
+        <form action="/logout" method="post">
+            <input type="submit" name="logout" value="Log Out">
+        </form>
+    </div>
+</div>
+{% else %}
+<div id="forms" class="forms">
+    <div class="register_form">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <form action="/register" method="post">
+            <div>
+                <label>Username</label>
+                <input name="username" type="text" required>
+            </div>
+            <div>
+                <label>Password</label>
+                <input name="password" type="password" required>
+            </div>
+            <div>
+                <label>Confirm Password</label>
+                <input name="confirmpassword" type="password" required>
+            </div>
+            <div>
+                <button type="submit">Register</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="login_form">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <form action="/login" method="post">
+            <div>
+                <label>Username</label>
+                <input name="username" type="text" required>
+            </div>
+            <div>
+                <label>Password</label>
+                <input name="password" type="password" required>
+            </div>
+            <div>
+                <button type="submit">Log-in</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endif %}
+
+</body>
+</html>
