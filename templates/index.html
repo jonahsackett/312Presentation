@@ -12,16 +12,21 @@
 <body>
 
 <div class="header">
-    <h1>Welcome to the CLUELESS 312 website!</h1>
+    <h1>Welcome to the CLUELESS Complaints Department!</h1>
+</div>
+<div class="subheader">
+    <h1>Use this page to log in, then proceed to the complaint room</h1>
 </div>
 
-<div class="image_div">
-    <img src="{{ url_for('static', filename='clue.JPG') }}" alt="picture machine broke :(" class="clue_image">
-</div>
+{#<div class="image_div">#}
+{#    <img src="{{ url_for('static', filename='clue.JPG') }}" alt="picture machine broke :(" class="clue_image">#}
+{#</div>#}
 
-<button type="button" id="background_buttonred">Change background to red</button>
-<button type="button" id="background_buttonblue">Change background to blue</button>
-<button type="button" id="chatroom-enter" onclick="chatRoomDirect()">Go to chatroom!</button>
+{#<button type="button" id="background_buttonred">Change background to red</button>#}
+{#<button type="button" id="background_buttonblue">Change background to blue</button>#}
+{#<button type="button" id="chatroom-enter" onclick="chatRoomDirect()">Go to complaints!</button>#}
+
+<br>
 
 
 {% if loggedin %}
@@ -70,6 +75,8 @@
         </form>
     </div>
 
+<br>
+
     <div class="login_form">
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -94,8 +101,16 @@
             </div>
         </form>
     </div>
+<button type="button" id="chatroom-enter" onclick="chatRoomDirect()">Go to complaints!</button>
 </div>
 {% endif %}
+
+<div class="image_div">
+    <img id = "pic1" src="{{ url_for('static', filename='bouncingq.gif') }}" alt="picture machine broke :(" class="clue_image">
+    <img id = "pic3" src="{{ url_for('static', filename='confused.png') }}" alt="picture machine broke :(" class="clue_image">
+    <img id = "pic2" src="{{ url_for('static', filename='bouncingq.gif') }}" alt="picture machine broke :(" class="clue_image">
+</div>
+
 
 </body>
 </html>

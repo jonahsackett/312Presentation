@@ -3,36 +3,54 @@ window.onload=function(){
     document.getElementById("background_buttonblue").addEventListener('click', function(){document.body.style.backgroundColor = "#87d6d4";});
 }
 
-function toggleForms() {
-    var forms = document.getElementById("forms");
-    var logout = document.getElementById("logged-in");
-    if (forms.style.display === "none"){
-        forms.style.display = "block";
-        logout.style.display = "none";
+
+function addMessageToChat(messageJSON, auth) {
+    const messageElement = document.createElement("div");
+    messageElement.classList.add("chat-message");
+    messageElement.id = messageJSON.id;
+    var messageHTML = '';
+    if (auth == "True"){
+        messageHTML = `
+        <p>${messageJSON.username}: ${messageJSON.message}</p> <a href="/like/${messageJSON.id}">Like</a><span id = "like${messageJSON.id}">-Likes: ${messageJSON.likes}</span>
+    `;
+    }else{
+        messageHTML = `
+        <p>${messageJSON.username}: ${messageJSON.message}</p> 
+    `;
     }
-    else{
-        forms.style.display = "none";
-        logout.style.display = "block";
+    messageElement.innerHTML = messageHTML;
+    const chatMessages = document.getElementById("chat-messages");
+    chatMessages.appendChild(messageElement);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function updateLike(messageJSON, auth){
+    if(auth == "True"){
+        console.log("works")
+        console.log("like"+messageJSON.id)
+        console.log(document.getElementById("like"+messageJSON.id).innerHTML)
+        document.getElementById("like"+messageJSON.id).innerHTML = "-Likes: " + messageJSON.likes;
     }
 }
 
 function sendChat(){
-    const chatTextBox = document.getElementById("textbox");
-    const message = chatTextBox.value;
-    chatTextBox.value = "";
-    const messageJSON = {"message": message};
-    const request = new XMLHttpRequest();
-    request.open("POST", "/chatroom-message");
-    request.send(JSON.stringify(messageJSON));
+    console.log("sent")
+    const message = document.getElementById('textbox').value;
+    socket.emit("chatMessage", { "message": message })
+    document.getElementById('textbox').value = '';
 }
 
-function chatRoomDirect(){
-    // const request = new XMLHttpRequest();
-    // request.open("GET", "/chatroom");
-    // request.send();
+function toggleForms() {
+    const forms = document.getElementById("forms");
+    const logout = document.getElementById("logged-in");
+    forms.style.display = (forms.style.display === "none") ? "block" : "none";
+    logout.style.display = (logout.style.display === "none") ? "block" : "none";
+}
+
+function chatRoomDirect() {
     window.location.href = "/chatroom";
 }
 
-function chatRoomLeave(){
+function chatRoomLeave() {
     window.location.href = "/";
 }
