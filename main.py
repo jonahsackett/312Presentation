@@ -8,6 +8,8 @@ import os
 import bcrypt
 import json
 import os
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 client = pymongo.MongoClient("mongo")
 db = client["CLUELESS"]
@@ -31,6 +33,15 @@ def validate_password(password):
 
 app = Flask(__name__)
 app.config["IMAGE_UPLOADS"] = "/uploads"
+
+limiter = Limiter(
+    app=app,
+    key_func=get_remote_address,
+    headers_enabled=True,
+    default_limits=["10 per 10 seconds", "10 per 35 seconds"],
+    storage_uri="memory://",
+    retry_after="30 seconds",
+)
  
 @app.route("/")
 def root():
